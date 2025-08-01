@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "astro dev --host",
         "dev:remote": "astro dev --host --remote",
-        "build": "astro build --remot",
+        "build": "astro build --remote",
         "preview": "astro preview",
         "astro": "astro"
     },
