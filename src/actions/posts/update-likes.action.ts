@@ -1,7 +1,7 @@
-import { server } from '@actions'
-import { actions, astroCalledServerError, defineAction } from 'astro:actions'
+import { defineAction } from 'astro:actions'
 import { db, eq, Posts } from 'astro:db'
 import { z } from 'astro:schema'
+import { getPostLikesHelper } from '@helpers/count-likes-helper'
 
 export const updatePostLikes = defineAction({
     accept: 'json',
@@ -11,14 +11,14 @@ export const updatePostLikes = defineAction({
     }),
     handler: async ({ postId, increment }) => {
         // const { data, error } = await actions.getPostLikes(postId)
-        const { data, error } = await server.getPostLikes(postId)
+        const resp = await getPostLikesHelper(postId)
 
-        if (error) {
-            console.log(error)
-            throw new Error('Algo salió mal')
-        }
+        // if (error) {
+        //     console.log(error)
+        //     throw new Error('Algo salió mal')
+        // }
 
-        const { exists, likes } = data
+        const { exists, likes } = resp
 
         if (!exists) {
             const newPost = {
