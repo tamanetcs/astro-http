@@ -1,4 +1,5 @@
-import { actions, defineAction } from 'astro:actions'
+import { server } from '@actions'
+import { actions, astroCalledServerError, defineAction } from 'astro:actions'
 import { db, eq, Posts } from 'astro:db'
 import { z } from 'astro:schema'
 
@@ -9,7 +10,8 @@ export const updatePostLikes = defineAction({
         increment: z.number()
     }),
     handler: async ({ postId, increment }) => {
-        const { data, error } = await actions.getPostLikes(postId)
+        // const { data, error } = await actions.getPostLikes(postId)
+        const { data, error } = await server.getPostLikes(postId)
 
         if (error) {
             console.log(error)
